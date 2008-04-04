@@ -1,0 +1,19 @@
+<$MTInclude module="<__trans phrase="Header">"$>
+
+<h1><$MTEntryTitle$></h1>
+
+<MTIf tag="EntryAuthorDisplayName">
+<p><__trans phrase="By [_1] on [_2]" params="<$MTEntryAuthorLink$>%%<$MTEntryDate format="%x %X"$>"></p>
+<MTElse>
+<p><$MTEntryDate format="%x %X"$></p>
+</MTIf>
+
+<MTIf tag="EntryBody">
+    <$MTEntryBody$>
+</MTIf>
+<MTIf tag="EntryMore" convert_breaks="0">
+    <$MTEntryMore$>
+</MTIf>
+
+<$MTInclude module="<__trans phrase="Sidebar">"$>
+<$MTInclude module="<__trans phrase="Footer">"$>

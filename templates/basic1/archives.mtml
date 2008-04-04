@@ -1,0 +1,27 @@
+<$MTInclude module="<__trans phrase="Header">"$>
+
+<h1><__trans phrase="Archives"></h1>
+
+<h2><__trans phrase="Categories"></h2>
+<ul>
+<MTCategories>
+    <li><a href="<$MTCategoryArchiveLink$>" title="<$MTCategoryDescription$>"><$MTCategoryLabel$></a></li>
+</MTCategories>
+</ul>
+
+<h2><__trans phrase="Monthly Archives"></h2>
+<ul>
+<MTArchiveList archive_type="Monthly">
+    <li><a href="<$MTArchiveLink$>"><$MTArchiveTitle$></a></li>
+</MTArchiveList>
+</ul>
+
+<h2><__trans phrase="Entry Archives"></h2>
+<ul>
+<MTArchiveList archive_type="Individual">
+    <li><$MTArchiveDate format="%Y.%m.%d"$>: <a href="<$MTArchiveLink$>"><$MTArchiveTitle$></a></li>
+</MTArchiveList>
+</ul>
+
+<$MTInclude module="<__trans phrase="Sidebar">"$>
+<$MTInclude module="<__trans phrase="Footer">"$>

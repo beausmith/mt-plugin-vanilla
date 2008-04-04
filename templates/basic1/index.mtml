@@ -1,0 +1,20 @@
+<$MTInclude module="<__trans phrase="Header">"$>
+
+<MTEntries>
+<h2><a href="<$MTEntryPermalink$>"><$MTEntryTitle$></a></h2>
+    <MTIf tag="EntryAuthorDisplayName">
+<p><__trans phrase="By [_1] on [_2]" params="<$MTEntryAuthorLink$>%%<$MTEntryDate format="%x %X"$>"></p>
+    <MTElse>
+<p><$MTEntryDate format="%x %X"$></p>
+    </MTIf>
+    <MTIf tag="EntryBody">
+<$MTEntryBody$>
+    </MTIf>
+    <MTIf tag="EntryMore" convert_breaks="0">
+<__trans phrase="Continue reading <a href="[_1]">[_2]</a>." params="<$MTEntryPermalink$>%%<$MTEntryTitle$>">
+    </MTIf>
+</MTEntries>
+
+<$MTInclude module="<__trans phrase="Sidebar">"$>
+<$MTInclude module="<__trans phrase="Footer">"$>
+
