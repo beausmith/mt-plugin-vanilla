@@ -1,0 +1,55 @@
+<mt:IncludeBlock module="wrapper">
+
+    <h1><__trans phrase="Archives"></h1>
+
+<!--
+    Available Archive Types
+    
+    * Daily
+    * Weekly
+    * Monthly           shown below
+    * Yearly
+    * Category          shown below
+    * Category-Daily
+    * Category-Weekly
+    * Category-Monthly
+    * Category-Yearly
+    * Author            shown below
+    * Author-Daily
+    * Author-Weekly
+    * Author-Monthly
+    * Author-Yearly
+
+-->
+
+    <h2><__trans phrase="Category Archives"></h2>
+    <ul>
+    <mt:ArchiveList archive_type="Category">
+        <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
+    </mt:ArchiveList>
+    </ul>
+
+<!--
+    <h2><__trans phrase="Category-Monthly Archives"></h2>
+    <ul>
+    <mt:ArchiveList archive_type="Category-Monthly">
+        <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
+    </mt:ArchiveList>
+    </ul>
+-->
+
+    <h2><__trans phrase="Monthly Archives"></h2>
+    <ul>
+    <mt:ArchiveList archive_type="Monthly">
+        <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
+    </mt:ArchiveList>
+    </ul>
+
+    <h2><__trans phrase="Author Archives"></h2>
+    <ul>
+    <mt:ArchiveList archive_type="Author">
+        <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
+    </mt:ArchiveList>
+    </ul>
+
+</mt:IncludeBlock>
