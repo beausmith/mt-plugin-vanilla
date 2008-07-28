@@ -30,7 +30,7 @@ template_sets:
     vanilla_archives:
         label: 'Vanilla + Archives'
         base_path: 'templates/vanilla+archives'
-        order: 502
+        order: 501
         templates:
             index:
                 home:
@@ -65,7 +65,7 @@ template_sets:
     vanilla_pages:
         label: 'Vanilla + Pages & Folders'
         base_path: 'templates/vanilla+pages'
-        order: 503
+        order: 502
         templates:
             index:
                 home:
@@ -88,9 +88,9 @@ template_sets:
                 wrapper:
                     label: Wrapper
     vanilla_authentication_userpics:
-        label: 'Vanilla + Authentication + Userpics'
+        label: 'Vanilla + Authentication & Userpics'
         base_path: 'templates/vanilla+authentication+userpics'
-        order: 504
+        order: 503
         templates:
             index:
                 home:
@@ -108,7 +108,7 @@ template_sets:
     vanilla_authentication_comments:
         label: 'Vanilla + Authentication & Comments'
         base_path: 'templates/vanilla+authentication+comments'
-        order: 505
+        order: 504
         templates:
             index:
                 home:
