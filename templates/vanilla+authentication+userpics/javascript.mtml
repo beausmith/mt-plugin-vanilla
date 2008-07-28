@@ -6,7 +6,7 @@
 </mt:Ignore>
 <$mt:var name="show_userpic" value="1"$>
 
-/* section *****************************************************************/
+/* Section *****************************************************************/
 
 // The cookie name to use for storing the blog-side comment session cookie.
 var mtCookieName = "<$mt:UserSessionCookieName$>";
@@ -15,6 +15,8 @@ var mtCookiePath = "<$mt:UserSessionCookiePath$>";
 var mtCookieTimeout = <$mt:UserSessionCookieTimeout$>;
 var is_preview;
 var user;
+
+/* Login Functions *****************************************************************/
 
 <mt:Ignore>
 /***
@@ -108,6 +110,34 @@ function mtUpdateSignInWidget(u) {
         el.innerHTML = content;
     }
 }
+
+<mt:IfBlog>
+<mt:IfRegistrationAllowed>
+/***
+ * If request contains a '#_login' or '#_logout' hash, use this to
+ * also delete the blog-side user cookie, since we're coming back from
+ * a login, logout or edit profile operation.
+ */
+var clearCookie = ( window.location.hash && window.location.hash.match( /^#_log(in|out)/ ) ) ? true : false;
+if (clearCookie) {
+    // clear any logged in state
+    mtClearUser();
+    if (RegExp.$1 == 'in')
+        mtFetchUser();
+} else {
+    <mt:Ignore>
+    /***
+     * Uncondition this call to fetch the current user state (if available)
+     * from MT upon page load if no user cookie is already present.
+     * This is okay if you have a private install, such as an Intranet;
+     * not recommended for public web sites!
+     */
+    </mt:Ignore>
+    if ( is_preview && !user )
+        mtFetchUser();
+}
+</mt:IfRegistrationAllowed>
+</mt:IfBlog>
 
 <mt:Ignore>
 /***
