@@ -87,9 +87,9 @@ template_sets:
             module:
                 wrapper:
                     label: Wrapper
-    vanilla_authentication:
-        label: 'Vanilla + Authentication'
-        base_path: 'templates/vanilla+authentication'
+    vanilla_authentication_userpics:
+        label: 'Vanilla + Authentication + Userpics'
+        base_path: 'templates/vanilla+authentication+userpics'
         order: 504
         templates:
             index:
