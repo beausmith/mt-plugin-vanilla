@@ -1,4 +1,10 @@
 <$mt:var name="user-auth" value="signin-content"$>
+<mt:Ignore>
+    Set show_userpic to 1 to enable userpics in the signin line
+    - Requires Community Solution
+    - Note: This will update username to link to Community Solution "edit profile" script. This script assumes that you are using profiles and thus links to "view profile" screen. If the template set is not using profiles then the Community Solution "Profile Edit" Global System Template should be updated.
+</mt:Ignore>
+<$mt:var name="show_userpic" value="1"$>
 
 /* section *****************************************************************/
 
@@ -64,11 +70,20 @@ function mtUpdateSignInWidget(u) {
         u = mtGetUser();
     }
     if (u && u.name) {
+<mt:If name="show_userpic">
+        if (u.userpic)
+            content += '<img src="' + u.userpic + '" width="50" height="50" />';
+</mt:If>
         var url;
         if (u.is_authenticated) {
             if (u.is_author) {
+<mt:If name="show_userpic">
+                url = '<$mt:CGIPath$><$mt:CommunityScript$>?__mode=edit&blog_id=<$mt:BlogID$>';
+                url += '&return_to=' + encodeURIComponent(document.URL);
+<mt:Else>
                 url = '<$mt:CGIPath$><$mt:CommentScript$>?__mode=edit_profile&blog_id=<$mt:BlogID$>';
                 url += '&static=' + encodeURIComponent( location.href );
+</mt:If>
             } else {
                 url = u.url;
             }
@@ -77,7 +92,7 @@ function mtUpdateSignInWidget(u) {
         } else {
             url = null;
         }
-        var content = '<__trans phrase="You are signed in as " escape="js">';
+        content += '<__trans phrase="You are signed in as " escape="js">';
         if (url)
             content += '<a href="' + url + '">' + u.name + '</a>';
         else
