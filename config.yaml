@@ -9,9 +9,12 @@ plugin_link:    http://www.beausmith.com/mt/plugins/vanilla
 
 template_sets:
     vanilla:
-        label: 'Vanilla (Homepage & Entries)'
-        base_path: 'templates/vanilla'
-        order: 500
+        label: Vanilla
+        base_path: templates/vanilla
+        order: 501
+        notes: 
+            - Lastn entries on Homepage
+            - Entry Detail for each
         templates:
             index:
                 home:
@@ -28,9 +31,14 @@ template_sets:
                 wrapper:
                     label: Wrapper
     vanilla_archives:
-        label: 'Vanilla + Archives'
-        base_path: 'templates/vanilla+archives'
-        order: 501
+        label: Vanilla + Archives
+        base_path: templates/vanilla+archives
+        notes:
+            - Base homepage & entries
+            - Archive Index
+            - Archives: Monthly, Author, Category and Category-Monthly
+            - Navigation w/ Category-Monthly links on Category Archives
+        order: 502
         templates:
             index:
                 home:
@@ -63,9 +71,13 @@ template_sets:
                 wrapper:
                     label: Wrapper
     vanilla_pages:
-        label: 'Vanilla + Pages & Folders'
-        base_path: 'templates/vanilla+pages'
-        order: 502
+        label: Vanilla + Pages
+        base_path: templates/vanilla+pages
+        notes:
+            - Base homepage & entries
+            - Pages
+            - Navigation including Pages
+        order: 503
         templates:
             index:
                 home:
@@ -88,16 +100,18 @@ template_sets:
                 wrapper:
                     label: Wrapper
     vanilla_authentication_userpics:
-        label: 'Vanilla + Authentication & Userpics'
-        base_path: 'templates/vanilla+authentication+userpics'
-        order: 503
+        label: Vanilla + Authentication & Userpics
+        base_path: templates/vanilla+authentication+userpics
+        notes: 
+            - En/disable userpics in javascript
+            - Use of community "edit profile" script is necessary to add userpics. The "edit profile" page assumes that you are using profiles and thus links to "view profile" screen. If using profiles is not desired, the "view profile" link can be removed from the "Profile Edit" Global System Template.
+        order: 504
         templates:
             index:
                 home:
                     label: Homepage
                     outfile: index.html
                     rebuild_me: 1
-#     * Userpics
                 javascript:
                     label: JavaScript
                     outfile: mt.js
@@ -106,9 +120,11 @@ template_sets:
                 wrapper:
                     label: Wrapper
     vanilla_authentication_comments:
-        label: 'Vanilla + Authentication & Comments'
-        base_path: 'templates/vanilla+authentication+comments'
-        order: 504
+        label: Vanilla + Authentication & Comments
+        base_path: templates/vanilla+authentication+comments
+        notes:
+            - foo
+        order: 505
         templates:
             index:
                 home:
@@ -125,8 +141,36 @@ template_sets:
                     mappings:
                         entry_archive:
                             archive_type: Individual
-#     * Comments (with Reply links)
-#     * Userpics
+            module:
+                wrapper:
+                    label: Wrapper
+            system:
+                comment_preview:
+                    label: Comment Preview
+                comment_response:
+                    label: Comment Response
+    vanilla_authentication_comments_userpics:
+        label: Vanilla + Authentication & Comments w/ Userpics
+        base_path: templates/vanilla+authentication+comments+userpics
+        notes:
+            - foo
+        order: 506
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+                javascript:
+                    label: JavaScript
+                    outfile: mt.js
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
             module:
                 wrapper:
                     label: Wrapper
@@ -136,34 +180,33 @@ template_sets:
                 comment_response:
                     label: Comment Response
 
-
-# 2. Authentication
-#     * TrackBacks
-#     vanilla_trackbacks:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
 # 
-
-# 4. Organization
+# - Organization
 #     * Categories
 #     * Tags
-
-# 6. Rating
-#     * 1
-#     * 5 Star
-#     * -1, 0, 1
-
-# 7. Create Entry
+# - Create Entry
 #     * category selector
-
-# 8. Profiles
+#     vanilla:
+#         label: 'Vanilla - Homepage + Entries'
+#         base_path: 'templates/vanilla'
+#         order: 100
+#         templates:
+# - Profiles + Userpics
+#     * Userpics
+#     * Profiles
+#     vanilla:
+#         label: 'Vanilla - Homepage + Entries'
+#         base_path: 'templates/vanilla'
+#         order: 100
+#         templates:
+# - Profiles + Friending
 #     * Friending
-
-# 9. YUI Template
-
-# 3. Rating
+#     vanilla:
+#         label: 'Vanilla - Homepage + Entries'
+#         base_path: 'templates/vanilla'
+#         order: 100
+#         templates:
+# - Rating
 #     * 1
 #     * 5 Star
 #     * -1, 0, 1
@@ -172,19 +215,4 @@ template_sets:
 #         base_path: 'templates/vanilla'
 #         order: 100
 #         templates:
-# 
-# 4. Create Entry
-#     * category selector
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
-# 
-# 5. Profiles
-#     *Friending
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
+# - YUI Template

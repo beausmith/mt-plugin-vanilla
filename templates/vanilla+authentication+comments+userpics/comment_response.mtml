@@ -1,5 +1,14 @@
 <mt:IncludeBlock module="wrapper">
 
+    <mt:SetVarBlock name="html_head">
+    <script type="text/javascript">
+    /* <![CDATA[ */
+    var user = <$mt:UserSessionState$>;
+    var is_preview = true;
+    /* ]]> */
+    </script>
+    </mt:SetVarBlock>
+
     <mt:If name="comment_confirmation">
         <h1><__trans phrase="Confirmation..."></h1>
         <p><__trans phrase="Your comment has been submitted!"></p>

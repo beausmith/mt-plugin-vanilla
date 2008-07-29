@@ -21,6 +21,10 @@
             </mt:CommentsHeader>
             <li id="comment-<$mt:CommentID$>">
                 <div class="comment-header">
+                    <mt:Ignore>Use "mt:CommenterURL" if user has an ID in MT, otherwise use "mt:CommentURL" (url submitted with comment) if anonymous commenter</mt:Ignore>
+                    <a href="<mt:If tag="CommenterID"><$mt:CommenterURL$><mt:Else><$mt:CommentURL$></mt:If>">
+                        <img src="<mt:If tag="CommenterUserpic"><$mt:CommenterUserpicURL$><mt:Else><$mt:StaticWebPath$>images/default-userpic-90.jpg</mt:If>" width="36" height="36" alt="user-pic" />
+                    </a>
                     <$mt:CommentAuthorIdentity$>
                     <mt:IfCommentParent>
                         <__trans phrase="[_1] replied to [_2]<a href="[_3]">comment from [_4]</a>[_5]" params="<$mt:CommentAuthorLink$>%%<mt:CommentParent>%%<$mt:CommentLink$>%%<$mt:CommentAuthor$>%%</mt:CommentParent>">
