@@ -1,66 +1,101 @@
-#############################################################
-This is a placeholder README.
-If you are the author, please fill in the __sections__ below.
-If you are not the author, please bug the author.
-#############################################################
+## Vanila, a plugin for Movable Type
+## Author: Beau Smith, beau at sixapart com
+## Version: 0.1
+## Released under GPL
 
-## __PLUGINNAME__, a plugin for Movable Type
-## Author: __AUTHORNAME__, __EMAIL/URL__
-## Version: __VERSION__
-## Released under __LICENSE__
-##
-## $Id$
- 
 ## OVERVIEW ##
 
-__A short and very basic description of the plugin.__
+    A series of template sets to learn about specific features in Movable Type.
 
 ## PREREQUISITES ##
 
-__detail MT version compatibility and anything else the plugin requires__
+    Requires Movable Type 4.2 for most features.
 
 ## FEATURES ##
 
-__A longer description of the plugin's features for those who are still reading__
+    Template Sets
+
+    1. Vanilla
+        - Lastn entries on Homepage
+        - Entry Detail
+
+    2. Vanilla + Archives
+        - Base homepage & entries
+        - Archive Index
+        - Archives: Monthly, Author, Category and Category-Monthly
+        - Navigation w/ Category-Monthly links on Category Archives
+
+    3. Vanilla + Pages
+        - Base homepage & entries
+        - Pages
+        - Navigation including Pages
+
+    4. Vanilla + Authentication & Userpics
+        - En/disable userpics in javascript
+        - Use of community "edit profile" script is necessary to add userpics. The "edit profile" page assumes that you are using profiles and thus links to "view profile" screen. If using profiles is not desired, the "view profile" link can be removed from the "Profile Edit" Global System Template.
+
+    5. Vanilla + Comments
+        - Authentication
+        - Comments
+        - Comment reply links
+        - Comment Preview
+        - Comment Response
+
+    6. Vanilla + Comments w/ Userpics
+        - Authentication w/ userpic
+        - Comments w/ userpics
+        - Comment reply links
+        - Comment Preview
+        - Comment Response
+        - En/disable userpics in javascript
+        - Use of community "edit profile" script is necessary to add userpics. The "edit profile" page assumes that you are using profiles and thus links to "view profile" screen. If using profiles is not desired, the "view profile" link can be removed from the "Profile Edit" Global System Template.
+
+    7. Vanilla + Create Entry
+        - Authentication
+        - Create Entry
+        - Entry Response
 
 ## INSTALLATION ##
 
-__detail installation instructions__
+    Place the Vanilla plugin folder in the MT plugins folder
 
-## CONFIGURATION ##
-
-__detail configuration instructions, if any__
+        $MT_DIR/
+            plugins/
+                Vanilla
 
 ## USAGE ##
 
-__detail further usage instructions, if any__
+    Install template sets in two ways:
+
+    1. When creating a new blog, select the template set you wish to use
+    2. Go to Design > Templates and select the "Refresh Templates" action link in the sidebar and choose the template set you wish to install
 
 ## KNOWN ISSUES ##
 
-__detail any known issues with current version, if any__
+    Any issues with each template set are listed under each template set in the Features section above.
 
 ## SUPPORT ##
 
-__specify where people can go for support__
+    There is no official support for this plugin, but you may email <beau at sixapart com> and/or mtos-dev@sixapart.com for assistance.
 
 ## SOURCE CODE ##
 
-Source
+    Source
 
-SVN Repo:
-    http://code.sixapart.com/svn/mtplugins/trunk/__PLUGINNAME__
+    SVN Repo:
+    http://code.sixapart.com/svn/mtplugins/trunk/Vanilla
 
-Trac View:
-    http://code.sixapart.com/trac/mtplugins/log/trunk/__PLUGINNAME_
+    Trac View:
+    http://code.sixapart.com/trac/mtplugins/browser/trunk/Vanilla
 
-Plugins:
-    http://plugins.movabletype.org/__PLUGIN__
+    Plugins:
+    http://plugins.movabletype.org/Vanilla (Not Yet Available)
 
 
 ## LICENSE ##
 
-__specify the license the plugin is released under__
+    GPL
 
 ## AUTHOR ##
 
-__insert arbitrary author info, e.g name, email, URL, company, etc__
+    Beau Smith <beau at sixapart com> http://beausmith.com/
