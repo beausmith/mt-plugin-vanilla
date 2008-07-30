@@ -11,7 +11,15 @@
 
     <h1><a href="<$mt:BlogURL$>" accesskey="1"><$mt:BlogName encode_html="1"$></a></h1>
 
-    <div id="signin-content"><a href="javascript:void(0)" onclick="return mtSignInOnClick('signin-content')"><__trans phrase="Sign In"></a></div>
+    <div id="signin-content">
+        <a href="javascript:void(0)" onclick="return mtSignInOnClick('signin-content')"><__trans phrase="Sign In"></a>
+    </div>
+
+    <h3><__trans phrase="Navigation"></h3>
+    <ul>
+        <li><a href="<$mt:Link template="Homepage"$>"><__trans phrase="Home"></a></li>
+        <li><a href="<$mt:Link template="Create Entry"$>"><__trans phrase="Create Entry"></a></li>
+    </ul>
 
 <!-- end header --><hr />
 

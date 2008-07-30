@@ -180,50 +180,6 @@ function mtSetUser(u) {
 
 <mt:Ignore>
 /***
- * Persists a copy of the current user cookie into the browser cookie stash.
- */
-</mt:Ignore>
-function mtSaveUser(f) {
-    // We can't reliably store the user cookie during a preview.
-    if (is_preview) return;
-
-    var u = mtGetUser();
-
-    if (f && (!u || u.is_anonymous)) {
-        if ( !u ) {
-            u = {};
-            u.is_authenticated = false;
-            u.can_comment = true;
-            u.is_author = false;
-            u.is_banned = false;
-            u.is_anonymous = true;
-            u.is_trusted = false;
-        }
-        if (f.author != undefined) u.name = f.author.value;
-        if (f.email != undefined) u.email = f.email.value;
-        if (f.url != undefined) u.url = f.url.value;
-    }
-
-    if (!u) return;
-
-    var cache_period = mtCookieTimeout * 1000;
-
-    // cache anonymous user info for a long period if the
-    // user has requested to be remembered
-    if (u.is_anonymous && f && f.bakecookie && f.bakecookie.checked)
-        cache_period = 365 * 24 * 60 * 60 * 1000;
-
-    var now = new Date();
-    mtFixDate(now);
-    now.setTime(now.getTime() + cache_period);
-
-    var cmtcookie = mtBakeUserCookie(u);
-    mtSetCookie(mtCookieName, cmtcookie, now, mtCookiePath, mtCookieDomain,
-        location.protocol == 'https:');
-}
-
-<mt:Ignore>
-/***
  * Handles the action of the "Sign in" link. First clears any existing
  * user cookie, then directs to the MT comment script to sign the user in.
  */

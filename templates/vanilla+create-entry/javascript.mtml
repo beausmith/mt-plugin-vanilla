@@ -6,7 +6,7 @@
 </mt:Ignore>
 <$mt:var name="show_userpic" value="0"$>
 
-/* section *****************************************************************/
+/* Section *****************************************************************/
 
 // The cookie name to use for storing the blog-side comment session cookie.
 var mtCookieName = "<$mt:UserSessionCookieName$>";
@@ -425,325 +425,7 @@ function mtUnbakeUserCookie(s) {
     return u;
 }
 
-/* Comment Messaging *****************************************************************/
-
-<mt:Ignore>
-/***
- * Called when an entry archive page is loaded.
- * This routine controls which elements of the comment form are shown
- * or hidden, depending on commenter type and blog configuration.
- */
-</mt:Ignore>
-<mt:IfBlog>
-function mtEntryOnLoad() {
-    <mt:Unless tag="IfPingsAccepted">mtHide('trackbacks-info');</mt:Unless>
-    <mt:Unless tag="IfCommentsAccepted">mtHide('comments-open');</mt:Unless>
-    mtFireEvent('usersignin');
-}
-
-function mtEntryOnUnload() {
-    if (mtRequestSubmitted) {
-        var cf = document['comments_form'];
-        if (cf) {
-            if (cf.post && cf.post.disabled)
-                cf.post.disabled = false;
-            if (cf.preview_button && cf.preview_button.disabled)
-                cf.preview_button.disabled = false;
-        }
-        mtRequestSubmitted = false;
-    }
-    return true;
-}
-
-mtAttachEvent('usersignin', mtUserOnLoad);
-</mt:IfBlog>
-
-<mt:Ignore>
-/***
- * Handles the display of the greeting message, depending on what kind of
- * user is logged in and blog comment policy.
- */
-</mt:Ignore>
-<mt:IfBlog>
-function mtShowGreeting() {
-<mt:IfRegistrationAllowed>
-    var reg_reqd = <mt:IfRegistrationRequired>true<mt:Else>false</mt:IfRegistrationRequired>;
-
-    var cf = document['comments_form'];
-    if (!cf) return;
-
-    var el = document.getElementById('comment-greeting');
-    if (!el)  // legacy MT 4.x element id
-        el = document.getElementById('comment-form-external-auth');
-    if (!el) return;
-
-    var eid = cf.entry_id;
-    var entry_id;
-    if (eid) entry_id = eid.value;
-
-    var phrase;
-    var u = mtGetUser();
-
-    if ( u && u.is_authenticated ) {
-        if ( u.is_banned ) {
-            phrase = '<__trans phrase="You do not have permission to comment on this blog. ([_1]sign out[_2])" params="<a href="javascript:void(0);" onclick="return mtSignOutOnClick();">%%</a>" escape="js">';
-        } else {
-            var user_link;
-            if ( u.is_author ) {
-                user_link = '<a href="<$mt:CGIPath$><$mt:CommentScript$>?__mode=edit_profile&return_url=' + encodeURIComponent( location.href );
-                user_link += '">' + u.name + '</a>';
-            } else {
-                // registered user, but not a user with posting rights
-                if (u.url)
-                    user_link = '<a href="' + u.url + '">' + u.name + '</a>';
-                else
-                    user_link = u.name;
-            }
-            // TBD: supplement phrase with userpic if one is available.
-            phrase = '<__trans phrase="Thanks for signing in, __NAME__. ([_1]sign out[_2])" params="<a href="javascript:void(0)" onclick="return mtSignOutOnClick();">%%</a>" escape="js">';
-            phrase = phrase.replace(/__NAME__/, user_link);
-        }
-    } else {
-        if (reg_reqd) {
-            phrase = '<__trans phrase="[_1]Sign in[_2] to comment." params="<a href="javascript:void(0)" onclick="return mtSignInOnClick('comment-greeting')">%%</a>" escape="js">';
-        } else {
-            phrase = '<__trans phrase="[_1]Sign in[_2] to comment, or comment anonymously." params="<a href="javascript:void(0)" onclick="return mtSignInOnClick('comment-greeting')">%%</a>" escape="js">';
-        }
-    }
-    el.innerHTML = phrase;
-<mt:Else>
-    mtShowCaptcha();
-</mt:IfRegistrationAllowed>
-}
-</mt:IfBlog>
-
-<mt:Ignore>
-/***
- * Function to hide/show/prepopulate fields based upon type of user that has authenticated
- */
-</mt:Ignore>
-<mt:IfBlog>
-function mtUserOnLoad() {
-    var u = mtGetUser();
-
-    // if the user is authenticated, hide the 'anonymous' fields
-    // and any captcha input if already shown
-    if ( document.getElementById('comments-form')) {
-        if ( u && u.is_authenticated ) {
-            mtShow('comments-form');
-            mtHide('comments-open-data');
-            if (mtCaptchaVisible)
-                mtHide('comments-open-captcha');
-        } else {
-<mt:IfRegistrationRequired>
-            mtHide('comments-form');
-</mt:IfRegistrationRequired>
-        }
-        if ( u && u.is_banned )
-            mtHide('comments-form');
-
-        // if we're previewing a comment, make sure the captcha
-        // field is visible
-        if (is_preview)
-            mtShowCaptcha();
-        else
-            mtShowGreeting();
-
-        // populate anonymous comment fields if user is cookied as anonymous
-        var cf = document['comments_form'];
-        if (cf) {
-            if (u && u.is_anonymous) {
-                if (u.email) cf.email.value = u.email;
-                if (u.name) cf.author.value = u.name;
-                if (u.url) cf.url.value = u.url;
-                if (cf.bakecookie)
-                    cf.bakecookie.checked = u.name || u.email;
-            } else {
-                if (u && u.sid && cf.sid)
-                    cf.sid.value = u.sid;
-            }
-            if (cf.post.disabled)
-                cf.post.disabled = false;
-            if (cf.preview_button.disabled)
-                cf.preview_button.disabled = false;
-            mtRequestSubmitted = false;
-        }
-    }
-}
-</mt:IfBlog>
-
-
-/* Comment Remember Me *****************************************************************/
-
-<mt:Ignore>
-/***
- * Called when the 'Remember me' checkbox is changed. If the checkbox
- * is cleared, the cached user cookie is immediately cleared.
- */
-</mt:Ignore>
-function mtRememberMeOnClick(b) {
-    if (!b.checked)
-        mtClearUser(b.form);
-    return true;
-}
-
-/* Comment Parent *****************************************************************/
-
-<mt:Ignore>
-/***
- * Handles the action of the 'Reply' links.
- */
-</mt:Ignore>
-function mtReplyCommentOnClick(parent_id, author) {
-    mtShow('comment-form-reply');
-
-    var checkbox = document.getElementById('comment-reply');
-    var label = document.getElementById('comment-reply-label');
-    var text = document.getElementById('comment-text');
-
-    // Populate label with new values
-    var reply_text = '<__trans phrase="Replying to <a href="[_1]" onclick="[_2]">comment from [_3]</a>" params="#comment-__PARENT__%%location.href=this.href; return false%%__AUTHOR__" escape="js">';
-    reply_text = reply_text.replace(/__PARENT__/, parent_id);
-    reply_text = reply_text.replace(/__AUTHOR__/, author);
-    label.innerHTML = reply_text;
-
-    checkbox.value = parent_id; 
-    checkbox.checked = true;
-    try {
-        // text field may be hidden
-        text.focus();
-    } catch(e) {
-    }
-
-    mtSetCommentParentID();
-}
-
-<mt:Ignore>
-/***
- * Sets the parent comment ID when replying to a comment.
- */
-</mt:Ignore>
-function mtSetCommentParentID() {
-    var checkbox = document.getElementById('comment-reply');
-    var parent_id_field = document.getElementById('comment-parent-id');
-    if (!checkbox || !parent_id_field) return;
-
-    var pid = 0;
-    if (checkbox.checked == true)
-        pid = checkbox.value;
-    parent_id_field.value = pid;
-}
-
-/* CAPTCHA *****************************************************************/
-
-<mt:Ignore>
-/***
- * Called when an input field on the comment form receives focus.
- */
-</mt:Ignore>
-function mtCommentFormOnFocus() {
-    // if CAPTCHA is enabled, this causes the captcha image to be
-    // displayed if it hasn't been already.
-    mtShowCaptcha();
-}
-
-<mt:Ignore>
-/***
- * Displays a captcha field for anonymous commenters.
- */
-</mt:Ignore>
-var mtCaptchaVisible = false;
-function mtShowCaptcha() {
-    var u = mtGetUser();
-    if ( u && u.is_authenticated ) return;
-    if (mtCaptchaVisible) return;
-    var div = document.getElementById('comments-open-captcha');
-    if (div) {
-        div.innerHTML = '<$mt:CaptchaFields$>';
-        mtCaptchaVisible = true;
-    }
-}
-
-/* Comment Submit *****************************************************************/
-
-<mt:Ignore>
-/***
- * Called when comment form is sent.
- * Required parameter: Form DOM object of comment form.
- * If form has a 'bakecookie' member, it will be used to signal
- * storing the anonymous commenter information to a cookie.
- * If form has a 'armor' member, it will be used to store
- * a token that is checked by the comment script.
- */
-</mt:Ignore>
-<mt:IfBlog>
-var mtRequestSubmitted = false;
-function mtCommentOnSubmit(f) {
-    if (!mtRequestSubmitted) {
-        mtRequestSubmitted = true;
-
-        if (f.armor)
-            f.armor.value = '<$mt:BlogSitePath encode_sha1="1"$>';
-        if (f.bakecookie && f.bakecookie.checked)
-            mtSaveUser(f);
-
-        // disable submit buttons
-        if (f.preview_button) f.preview_button.disabled = true;
-        if (f.post) f.post.disabled = true;
-
-        var u = mtGetUser();
-        if ( !is_preview && ( u && u.is_authenticated ) ) {
-            // validate session; then submit
-            mtFetchedUser = false;
-            mtFetchUser('mtCommentSessionVerify');
-            return false;
-        }
-
-        return true;
-    }
-    return false;
-}
-
-function mtCommentSessionVerify(app_user) {
-    var u = mtGetUser();
-    var f = document['comments_form'];
-    if ( u && app_user && app_user.sid && ( u.sid == app_user.sid ) ) {
-        f.submit();
-    } else {
-        alert('<__trans phrase="Your session has expired. Please sign in again to comment." escape="js">');
-        mtClearUser();
-        mtFireEvent('usersignin');
-<mt:IfRegistrationRequired>
-        mtShow('comments-form');
-        mtHide('comments-open-footer');
-</mt:IfRegistrationRequired>
-    }
-}
-</mt:IfBlog>
-
 /* Utility Functions *****************************************************************/
-
-<mt:Ignore>
-/***
- * Simple routine for showing a DOM element (applying a CSS display
- * attribute of 'none').
- */
-</mt:Ignore>
-function mtHide(id) {
-    var el = (typeof id == "string") ? document.getElementById(id) : id;
-    if (el) el.style.display = 'none';
-}
-
-<mt:Ignore>
-/***
- * Simple routine for showing a DOM element (applying a CSS display
- * attribute of 'block').
- */
-</mt:Ignore>
-function mtShow(id) {
-    var el = (typeof id == "string") ? document.getElementById(id) : id;
-    if (el) el.style.display = 'block';
-}
 
 <mt:Ignore>
 /***
@@ -802,96 +484,176 @@ function mtAttachEvent(eventName,func) {
     }
 }
 
-/* Ajax Requests *****************************************************************/
+/* Create Entry *****************************************************************/
 
 <mt:Ignore>
 /***
- * Returns a XMLHttpRequest object (for Ajax operations).
+ * Conditional block functionality for IfLoggedIn tag
  */
 </mt:Ignore>
-function mtGetXmlHttp() {
-    if ( !window.XMLHttpRequest ) {
-        window.XMLHttpRequest = function() {
-            var types = [
-                "Microsoft.XMLHTTP",
-                "MSXML2.XMLHTTP.5.0",
-                "MSXML2.XMLHTTP.4.0",
-                "MSXML2.XMLHTTP.3.0",
-                "MSXML2.XMLHTTP"
-            ];
 
-            for ( var i = 0; i < types.length; i++ ) {
-                try {
-                    return new ActiveXObject( types[ i ] );
-                } catch( e ) {}
-            }
-
-            return undefined;
-        };
-    }
-    if ( window.XMLHttpRequest )
-        return new XMLHttpRequest();
-}
-
-/* Section *****************************************************************/
-
-<mt:Ignore>
-/***
- * Initialize
- */
-</mt:Ignore>
-// BEGIN: fast browser onload init
-// Modifications by David Davis, DWD
-// Dean Edwards/Matthias Miller/John Resig
-// http://dean.edwards.name/weblog/2006/06/again/?full#comment5338
-
-function mtInit() {
-    // quit if this function has already been called
-    if (arguments.callee.done) return;
-
-    // flag this function so we don't do the same thing twice
-    arguments.callee.done = true;
-
-    // kill the timer
-    // DWD - check against window
-    if ( window._timer ) clearInterval(window._timer);
-
-    // DWD - fire the window onload now, and replace it
-    if ( window.onload && ( window.onload !== window.mtInit ) ) {
-        window.onload();
-        window.onload = function() {};
-    }
-}
-
-/* for Mozilla/Opera9 */
-if (document.addEventListener) {
-    document.addEventListener("DOMContentLoaded", mtInit, false);
-}
-
-/* for Internet Explorer */
-/*@cc_on @*/
-/*@if (@_win32)
-document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
-var script = document.getElementById("__ie_onload");
-script.onreadystatechange = function() {
-    if (this.readyState == "complete") {
-        mtInit(); // call the onload handler
-    }
-};
-/*@end @*/
-
-/* for Safari */
-if (/WebKit/i.test(navigator.userAgent)) { // sniff
-    _timer = setInterval(function() {
-        if (/loaded|complete/.test(document.readyState)) {
-            mtInit(); // call the onload handler
+function conditional_block(cond, id) {
+    var true_block = document.getElementById(id);
+    var false_block = document.getElementById(id + '_else');
+    if (cond) {
+        if (true_block) {
+            var display = true_block.getAttribute('mt:display_style');
+            if (!display && false_block)
+                display = false_block.getAttribute('mt:display_style');
+            if (!display) display = '';
+            true_block.style.display = display;
+            DOM.removeClassName(true_block, 'hidden');
         }
-    }, 10);
+        if (false_block) {
+            false_block.style.display = 'none';
+            DOM.addClassName(false_block, 'hidden');
+        }
+    }
+    else {
+        if (true_block) {
+            true_block.style.display = 'none';
+            DOM.addClassName(true_block, 'hidden');
+        }
+        if (false_block) {
+            var display = false_block.getAttribute('mt:display_style');
+            if (!display && true_block)
+                display = false_block.getAttribute('mt:display_style');
+            if (!display) display = '';
+            false_block.style.display = display;
+            DOM.removeClassName(false_block, 'hidden');
+        }
+    }
 }
 
-/* for other browsers */
-window.onload = mtInit;
+/* section *****************************************************************/
 
-// END: fast browser onload init
+defined = function( x ) { return x !== undefined; };
 
-/* END Movable Type Javascript *****************************************************************/
+if ( !window.Event )
+    try { window.Event = {} } catch(e) { };
+
+Event.prep = function( ev ) {
+        ev = ev || window.event;
+        if( !defined( ev.stop ) )
+            ev.stop = this.stop;
+        if( !defined( ev.target ) )
+            ev.target = ev.srcElement;
+        if( !defined( ev.relatedTarget ) ) {
+            ev.relatedTarget = (event.type == "mouseover" || event.type == "mouseenter")
+                ? ev.fromElement
+                : ev.toElement;
+        }
+        return ev;
+    };
+
+if ( !window.DOM )
+    DOM = {
+
+        getElement: function( e ) {
+            return (typeof e == "string" || typeof e == "number") ? document.getElementById( e ) : e;
+        },
+    
+    
+        addEventListener: function( e, en, f, uc ) {
+            try {
+                if( e.addEventListener )
+                    e.addEventListener( en, f, uc );
+                else if( e.attachEvent )
+                    e.attachEvent( "on" + en, f );
+                else
+                    e[ "on" + en ] = f;
+            } catch( e ) {}
+        },
+
+    
+        getClassNames: function( e ) {
+            if( !e || !e.className )
+                return [];
+            return e.className.split( /\s+/g );
+        },
+    
+    
+        hasClassName: function( e, cn ) {
+            e = DOM.getElement( e );
+            if( !e || !e.className )
+                return false;
+            var cs = DOM.getClassNames( e );
+            for( var i = 0; i < cs.length; i++ ) {
+                if( cs[ i ] == cn )
+                    return true;
+            }
+            return false;
+        },
+    
+    
+        addClassName: function( e, cn ) {
+            e = DOM.getElement( e );
+            if( !e || !cn )
+                return false;
+            var cs = DOM.getClassNames( e );
+            for( var i = 0; i < cs.length; i++ ) {
+                if( cs[ i ] == cn )
+                    return true;
+            }
+            cs.push( cn );
+            e.className = cs.join( " " );
+            return false;
+        },
+    
+    
+        removeClassName: function( e, cn ) {
+            var r = false;
+            e = DOM.getElement( e );
+            if( !e || !e.className || !cn )
+                return r;
+            var cs = (e.className && e.className.length)
+                ? e.className.split( /\s+/g )
+                : [];
+            var ncs = [];
+            /* support regex */
+            if( cn instanceof RegExp ) {
+                for( var i = 0; i < cs.length; i++ ) {
+                    if ( cn.test( cs[ i ] ) ) {
+                        r = true;
+                        continue;
+                    }
+                    ncs.push( cs[ i ] );
+                }
+            } else {
+                for( var i = 0; i < cs.length; i++ ) {
+                    if( cs[ i ] == cn ) {
+                        r = true;
+                        continue;
+                    }
+                    ncs.push( cs[ i ] );
+                }
+            }
+            if( r )
+                e.className = ncs.join( " " );
+            return r;
+        },
+
+
+        getElementsByTagAndClassName: function( tagName, className, root ) {
+            root = DOM.getElement( root );
+            if( !root )
+                root = document;
+            var allElements = root.getElementsByTagName( tagName );
+            var elements = [];
+            for( var i = 0; i < allElements.length; i++ ) {
+                var element = allElements[ i ];
+                if( !element )
+                    continue;
+                if( DOM.hasClassName( element, className ) )
+                    elements[ elements.length ] = element;
+            }
+            return elements;
+        },
+
+
+        getElementsByClassName: function( className, root ) {
+            return DOM.getElementsByTagAndClassName( "*", className, root );
+        }
+
+
+    };

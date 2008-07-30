@@ -14,7 +14,7 @@ template_sets:
         order: 501
         notes: 
             - Lastn entries on Homepage
-            - Entry Detail for each
+            - Entry Detail
         templates:
             index:
                 home:
@@ -99,9 +99,9 @@ template_sets:
             module:
                 wrapper:
                     label: Wrapper
-    vanilla_authentication_userpics:
+    vanilla_authentication:
         label: Vanilla + Authentication & Userpics
-        base_path: templates/vanilla+authentication+userpics
+        base_path: templates/vanilla+authentication
         notes: 
             - En/disable userpics in javascript
             - Use of community "edit profile" script is necessary to add userpics. The "edit profile" page assumes that you are using profiles and thus links to "view profile" screen. If using profiles is not desired, the "view profile" link can be removed from the "Profile Edit" Global System Template.
@@ -119,11 +119,15 @@ template_sets:
             module:
                 wrapper:
                     label: Wrapper
-    vanilla_authentication_comments:
-        label: Vanilla + Authentication & Comments
-        base_path: templates/vanilla+authentication+comments
+    vanilla_comments:
+        label: Vanilla + Comments
+        base_path: templates/vanilla+comments
         notes:
-            - foo
+            - Authentication
+            - Comments
+            - Comment reply links
+            - Comment Preview
+            - Comment Response
         order: 505
         templates:
             index:
@@ -149,11 +153,17 @@ template_sets:
                     label: Comment Preview
                 comment_response:
                     label: Comment Response
-    vanilla_authentication_comments_userpics:
-        label: Vanilla + Authentication & Comments w/ Userpics
+    vanilla_comments_userpics:
+        label: Vanilla + Comments w/ Userpics
         base_path: templates/vanilla+authentication+comments+userpics
         notes:
-            - foo
+            - Authentication w/ userpic
+            - Comments w/ userpics
+            - Comment reply links
+            - Comment Preview
+            - Comment Response
+            - En/disable userpics in javascript
+            - Use of community "edit profile" script is necessary to add userpics. The "edit profile" page assumes that you are using profiles and thus links to "view profile" screen. If using profiles is not desired, the "view profile" link can be removed from the "Profile Edit" Global System Template.
         order: 506
         templates:
             index:
@@ -179,18 +189,43 @@ template_sets:
                     label: Comment Preview
                 comment_response:
                     label: Comment Response
+    vanilla_create_entry:
+        label: Vanilla + Create Entry
+        base_path: templates/vanilla+create-entry
+        notes: 
+            - Authentication
+            - Create Entry
+            - Entry Response
+        order: 507
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+                create-entry:
+                    label: Create Entry
+                    outfile: create-entry.html
+                    rebuild_me: 1
+                javascript:
+                    label: JavaScript
+                    outfile: mt.js
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            module:
+                wrapper:
+                    label: Wrapper
+            system:
+                entry_response:
+                    label: Entry Response
 
-# 
 # - Organization
-#     * Categories
 #     * Tags
-# - Create Entry
-#     * category selector
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
 # - Profiles + Userpics
 #     * Userpics
 #     * Profiles
@@ -215,4 +250,6 @@ template_sets:
 #         base_path: 'templates/vanilla'
 #         order: 100
 #         templates:
+# - Search
+# - Custom Fields
 # - YUI Template

@@ -1,4 +1,12 @@
 <mt:IncludeBlock module="wrapper">
+    
+    <mt:setvarblock name="html_head" append="1">
+        <style type="text/css" media="screen">
+            form {
+                width: 50%;
+            }
+        </style>
+    </mt:setvarblock>
 
     <mt:SetVarBlock name="html_head">
     <script type="text/javascript">
@@ -44,14 +52,18 @@
                     <input type="hidden" name="preview" value="" />
                     <input type="hidden" name="sid" value="" />
                     <div id="comments-open-data">
-                        <label for="comment-author"><__trans phrase="Name"></label>
-                        <input id="comment-author" name="author" size="30" value="<mt:If name="comment_preview"><$mt:CommentAuthor encode_html="1"$></mt:If>" onfocus="mtCommentFormOnFocus()" />
-
-                        <label for="comment-email"><__trans phrase="Email Address"></label>
-                        <input id="comment-email" name="email" size="30" value="<mt:If name="comment_preview"><$mt:CommentEmail encode_html="1"$></mt:If>" onfocus="mtCommentFormOnFocus()" />
-
-                        <label for="comment-url"><__trans phrase="URL"></label>
-                        <input id="comment-url" name="url" size="30" value="<mt:If name="comment_preview"><$mt:CommentURL encode_html="1"$></mt:If>" onfocus="mtCommentFormOnFocus()" />
+                        <div>
+                            <label for="comment-author"><__trans phrase="Name"></label>
+                            <input id="comment-author" name="author" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
+                        <div>
+                            <label for="comment-email"><__trans phrase="Email Address"></label>
+                            <input id="comment-email" name="email" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
+                        <div>
+                            <label for="comment-url"><__trans phrase="URL"></label>
+                            <input id="comment-url" name="url" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
                     </div>
                     <div id="comment-form-reply"<mt:IfCommentParent><mt:Else> style="display:none"</mt:IfCommentParent>>
                         <input type="checkbox" id="comment-reply" name="comment_reply" value="<$mt:CommentParentID$>"<mt:IfCommentParent> checked="checked"</mt:IfCommentParent> onclick="mtSetCommentParentID()" />

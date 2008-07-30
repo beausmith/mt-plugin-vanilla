@@ -1,4 +1,12 @@
 <mt:IncludeBlock module="wrapper">
+    
+    <mt:setvarblock name="html_head" append="1">
+        <style type="text/css" media="screen">
+            form {
+                width: 50%;
+            }
+        </style>
+    </mt:setvarblock>
 
     <h1><$mt:EntryTitle$></h1>
     <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
@@ -56,17 +64,22 @@
                     <input type="hidden" name="preview" value="" />
                     <input type="hidden" name="sid" value="" />
                     <div id="comments-open-data">
-                        <label for="comment-author"><__trans phrase="Name"></label>
-                        <input id="comment-author" name="author" size="30" value="" onfocus="mtCommentFormOnFocus()" />
-
-                        <label for="comment-email"><__trans phrase="Email Address"></label>
-                        <input id="comment-email" name="email" size="30" value="" onfocus="mtCommentFormOnFocus()" />
-
-                        <label for="comment-url"><__trans phrase="URL"></label>
-                        <input id="comment-url" name="url" size="30" value="" onfocus="mtCommentFormOnFocus()" />
-
-                        <input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="mtRememberMeOnClick(this)" value="1" accesskey="r" />
-                        <label for="comment-bake-cookie"><__trans phrase="Remember personal info?"></label>
+                        <div>
+                            <label for="comment-author"><__trans phrase="Name"></label>
+                            <input id="comment-author" name="author" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
+                        <div>
+                            <label for="comment-email"><__trans phrase="Email Address"></label>
+                            <input id="comment-email" name="email" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
+                        <div>
+                            <label for="comment-url"><__trans phrase="URL"></label>
+                            <input id="comment-url" name="url" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                        </div>
+                        <div>
+                            <input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="mtRememberMeOnClick(this)" value="1" accesskey="r" />
+                            <label for="comment-bake-cookie"><__trans phrase="Remember personal info?"></label>
+                        </div>
                     </div>
                     <div id="comment-form-reply" style="display:none">
                         <input type="checkbox" id="comment-reply" name="comment_reply" value="<$mt:CommentParentID$>" onclick="mtSetCommentParentID()" />

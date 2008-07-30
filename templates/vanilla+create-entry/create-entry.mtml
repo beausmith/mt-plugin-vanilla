@@ -1,0 +1,56 @@
+<mt:IncludeBlock module="wrapper">
+
+    <mt:SetVarBlock name="html_head">
+    <script type="text/javascript">
+    <!-- 
+    function entry_create_loggedin() {
+        var u = mtGetUser();
+        var loggedin = u && u.is_authenticated && u.is_author ? true : false;
+        var eid = 'logged_in';
+        conditional_block(loggedin, eid);
+        if (!loggedin) {
+            var p = document.getElementById('login_message');
+            if (!p) return;
+            if (u && !u.is_author) 
+                p.innerHTML = "<__trans phrase="In order to create an entry on this blog you must first register.">";
+            else
+                if (u && !u.can_post)
+                    p.innerHTML = "<__trans phrase="You do not have permission to post.">";
+                else
+                    p.innerHTML = '<a href="javascript:void(0)" onclick="return mtSignInOnClick(\'login_message\')"><__trans phrase="Sign in to create an entry." escape="js"></a>';
+        } else {
+            var mt = document.getElementById('magic_token');
+            if (mt) mt.value = u.sid;
+        }
+    }
+    //-->
+    </script>
+    </mt:SetVarBlock>
+
+    <h1><__trans phrase="Create Entry"></h1>
+
+    <mt:IfLoggedIn script="entry_create_loggedin" class="foo">
+        <form method="post" action="<$mt:CGIPath$><$mt:CommunityScript$>" name="entry_form" id="create-entry-form" enctype="multipart/form-data">
+            <input type="hidden" name="__mode" value="post" />
+            <input type="hidden" name="blog_id" value="<$mt:BlogID$>" />
+            <input type="hidden" id="magic_token" name="magic_token" value="" />
+            <div>
+                <label for="entry-title"><__trans phrase="Title"></label>
+                <input id="entry-title" class="ti" name="title" />
+            </div>
+            <div>
+                <label for="entry-title"><__trans phrase="Body"></label>
+                <textarea id="entry-body" class="ta" name="text" rows="15" cols="50"></textarea>
+            </div>
+            <input type="submit" accesskey="s" name="post" id="entry-submit" value="<__trans phrase="Submit">" />
+        </form>
+    <mt:Else>
+        <p id="login_message"></p>
+    </mt:IfLoggedIn>
+    <script type="text/javascript">
+    <!--
+    mtAttachEvent('usersignin', entry_create_loggedin);
+    //-->
+    </script>
+
+</mt:IncludeBlock>
