@@ -36,7 +36,7 @@ function mtUnbakeUserCookie(s) // Unserializes a user cookie and returns a user 
 function mtClearUser() // Clears the blog-side user cookie.
 profile operation.
 function mtFetchUser(cb) // Issues a request to the MT comment script to retrieve the currently logged-in user (if any).
-function mtUpdateSignInWidget(u) // A routine that displays various phrases based upon users authenticated status
+    function mtUpdateSignInWidget(u) // A routine that displays various phrases based upon users authenticated status (works with Sign In Widget)
 function mtGetUser() // Retrieves an object of the currently logged in user's state. If no user is logged in or cookied, this will return null.
 function mtSignIn() // Handles the action of the "Sign in" link. First clears any existing user cookie, then directs to the MT comment script to sign the user in.
 function mtSignInOnClick(sign_in_element) // **Handles the action of the "Sign in" link.
