@@ -223,10 +223,45 @@ template_sets:
             system:
                 entry_response:
                     label: Entry Response
+    vanilla_search_tags:
+        label: Vanilla + Search & Tags
+        base_path: templates/vanilla+search+tags
+        order: 508
+        notes: 
+            - Tag Cloud and Search Form on Homepage
+            - Entry Detail
+            - Page Detail
+            - Search Results Template
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+                javascript:
+                    label: Javascript
+                    outfile: mt.js
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            page:
+                page: 
+                    label: Page
+                    mappings:
+                        page_archive:
+                            archive_type: Page
+            module:
+                wrapper:
+                    label: Wrapper
+            system:
+                search_results:
+                    label: Search Results
 
-# - Organization
-#     * Tags
-# - Profiles + Userpics
+# - Profiles + Userpics + Friending
 #     * Userpics
 #     * Profiles
 #     vanilla:
@@ -234,7 +269,7 @@ template_sets:
 #         base_path: 'templates/vanilla'
 #         order: 100
 #         templates:
-# - Profiles + Friending
+# - Profiles
 #     * Friending
 #     vanilla:
 #         label: 'Vanilla - Homepage + Entries'
@@ -250,6 +285,14 @@ template_sets:
 #         base_path: 'templates/vanilla'
 #         order: 100
 #         templates:
-# - Search
 # - Custom Fields
+# - Assets
+#   - recent assets
+#   - sizing
+
+# - Widget & Widget Sets
+# - Logic
+#   - if/else
+#   - unless
+#   - var w/ op attributes
 # - YUI Template

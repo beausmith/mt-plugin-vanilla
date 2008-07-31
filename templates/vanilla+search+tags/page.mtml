@@ -1,0 +1,12 @@
+<mt:IncludeBlock module="Wrapper">
+
+    <h1><$mt:PageTitle$></h1>
+    <p><__trans phrase="By [_1] on [_2]" params="<$mt:PageAuthorLink$>%%<$mt:PageDate format="%x %X"$>"></p>
+    <mt:If tag="PageBody">
+        <$mt:PageBody$>
+    </mt:If>
+    <mt:If tag="PageMore" convert_breaks="0">
+        <$mt:PageMore$>
+    </mt:If>
+
+</mt:IncludeBlock>

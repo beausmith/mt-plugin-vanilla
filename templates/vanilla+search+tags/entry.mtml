@@ -1,0 +1,26 @@
+<mt:IncludeBlock module="Wrapper">
+
+    <h1><$mt:EntryTitle$></h1>
+    <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
+    <mt:If tag="EntryBody">
+        <$mt:EntryBody$>
+    </mt:If>
+    <mt:If tag="EntryMore" convert_breaks="0">
+        <$mt:EntryMore$>
+    </mt:If>
+    <mt:EntryTags glue=", "><$mt:TagLabel$></mt:EntryTags>
+
+    <mt:If tag="EntryTags">
+        <h3>Tags</h3>
+        <ul>
+            <mt:EntryTags>
+            <li><a href="javascript:void(0)" onclick="location.href='<$mt:TagSearchLink encode_js="1"$>';return false;" rel="tag"><$mt:TagName$></a></li>
+            </mt:EntryTags>
+        </ul>
+        <ul>
+            <mt:EntryTags>
+            <li><a href="<$MTTagSearchLink$>&amp;IncludeBlogs=<$MTBlogID$>" rel="tag"><$MTTagName$></a></li>
+            </mt:EntryTags>
+        </ul>
+    </mt:If>
+</mt:IncludeBlock>

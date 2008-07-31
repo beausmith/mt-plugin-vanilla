@@ -1,0 +1,143 @@
+<mt:IncludeBlock module="Wrapper">
+
+<mt:Ignore><!-- Below Javascript adds ajax search capability --></mt:Ignore>
+<mt:SetVarBlock name="html_head" append="1">
+<script type="text/javascript">
+/* <![CDATA[ */
+var user = <$mt:UserSessionState$>;
+<mt:IfMoreResults>
+function getResults(page) {
+    page = parseInt(page);
+    if (timer) window.clearTimeout(timer);
+    var xh = mtGetXmlHttp();
+    if (!xh) return false;
+    var res = results[page];
+    if (!res) return;
+    var url = res['next_url'];
+    if (!url) return;
+
+    xh.open('GET', url + '&format=js', true);
+    xh.onreadystatechange = function() {
+        if ( xh.readyState == 4 ) {
+            if ( xh.status && ( xh.status != 200 ) ) {
+                // error - ignore
+            } else {
+                try {
+                    var page_results = eval("(" + xh.responseText + ")");
+                    if ( page_results['error'] == null )
+                        results[page + 1] = page_results['result'];
+                } catch (e) {
+                }
+            }
+        }
+    };
+    xh.send(null);
+}
+
+function swapContent(direction) {
+    if ( direction == undefined ) direction = 1;
+    var page_span = document.getElementById('current-page');
+    if (!page_span) return true;
+    var next_page = direction + parseInt(page_span.innerHTML);
+    var res = results[next_page];
+    if (!res) return true;
+    var content = res['content'];
+    if (!content) return true;
+    var div = document.getElementById('search-results');
+    if (!div) return true;
+    div.innerHTML = content;
+    timer = window.setTimeout("getResults(" + next_page + ")", 1*1000);
+    window.scroll(0, 0);
+    return false;
+}
+<mt:Else>
+    <mt:IfPreviousResults>
+function swapContent(direction) {
+	return true;
+}
+    </mt:IfPreviousResults>
+</mt:IfMoreResults>
+/* ]]> */
+</script>
+</mt:SetVarBlock>
+
+<mt:SetVarTemplate id="search_results" name="search_results">  
+    <mt:SearchResults>
+        <mt:SearchResultsHeader>
+<div id="search-results">
+    <h1 id="page-title" class="search-results-header">
+        <mt:IfStraightSearch>
+        <__trans phrase="Results matching &ldquo;[_1]&rdquo;" params="<$mt:SearchString$>">
+        </mt:IfStraightSearch>
+        <mt:IfTagSearch>
+        <__trans phrase="Results tagged &ldquo;[_1]&rdquo;" params="<$mt:SearchString$>">
+        </mt:IfTagSearch>
+    </h1>
+    <div class="content-nav">
+        <span class="results-previous-link"><mt:IfPreviousResults><a href="<$mt:PreviousLink$>" rel="prev" onclick="return swapContent(-1);">&laquo; <__trans phrase="Previous"></a><mt:else>&laquo; <__trans phrase="Previous"></mt:IfPreviousResults></span>&nbsp;&nbsp;<mt:PagerBlock><mt:IfCurrentPage><strong class="results-current-page"><$mt:Var name="__value__"$></strong><mt:Else><a href="<$mt:PagerLink$>"><$mt:Var name="__value__"$></a></mt:IfCurrentPage><mt:Unless name="__last__">&nbsp;</mt:Unless></mt:PagerBlock>&nbsp;&nbsp;<span class="results-previous-link"><mt:IfMoreResults><a href="<$mt:NextLink$>" rel="next" onclick="return swapContent();"><__trans phrase="Next"> &raquo;</a><mt:else><__trans phrase="Next"> &raquo;</mt:IfMoreResults></span>
+    </div>
+    <div class="search-results-container autopagerize_page_element">
+        </mt:SearchResultsHeader>
+        <h2><a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a></h2>
+        <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
+        <mt:If tag="EntryBody">
+            <$mt:EntryBody$>
+        </mt:If>
+        <mt:If tag="EntryMore" convert_breaks="0">
+            <em><__trans phrase="Continue reading <a href="[_1]">[_2]</a>." params="<$mt:EntryPermalink$>%%<$mt:EntryTitle$>"></em>
+        </mt:If>
+        <mt:SearchResultsFooter>
+    </div>
+    <mt:Ignore>autopagerize_insert_before - Used with the ajax search capability of the new search class</mt:Ignore>
+    <div class="autopagerize_insert_before"></div>
+    <div class="content-nav">
+        <span class="results-previous-link"><mt:IfPreviousResults><a href="<$mt:PreviousLink$>" rel="prev" onclick="return swapContent(-1);">&laquo; <__trans phrase="Previous"></a><mt:else>&laquo; <__trans phrase="Previous"></mt:IfPreviousResults></span>&nbsp;&nbsp;<mt:PagerBlock><mt:IfCurrentPage><strong class="results-current-page"><$mt:Var name="__value__"$></strong><mt:Else><a href="<$mt:PagerLink$>"><$mt:Var name="__value__"$></a></mt:IfCurrentPage><mt:Unless name="__last__">&nbsp;</mt:Unless></mt:PagerBlock>&nbsp;&nbsp;<span class="results-previous-link"><mt:IfMoreResults><a href="<$mt:NextLink$>" rel="next" onclick="return swapContent();"><__trans phrase="Next"> &raquo;</a><mt:else><__trans phrase="Next"> &raquo;</mt:IfMoreResults></span>
+    </div>
+</div>
+        </mt:SearchResultsFooter>
+    </mt:SearchResults>
+</mt:SetVarTemplate>
+<$mt:Var name="search_results"$>
+
+<mt:NoSearchResults>
+<h1 id="page-title" class="search-results-header">
+    <mt:IfStraightSearch>
+    <__trans phrase="Results matching &ldquo;[_1]&rdquo;" params="<$mt:SearchString$>">
+    </mt:IfStraightSearch>
+    <mt:IfTagSearch>
+    <__trans phrase="Results tagged &ldquo;[_1]&rdquo;" params="<$mt:SearchString$>">
+    </mt:IfTagSearch>
+</h1>
+<p><__trans phrase="No results found for &ldquo;[_1]&rdquo;." params="<$mt:SearchString$>"></p>
+</mt:NoSearchResults>
+
+<mt:NoSearch>
+<h1 id="page-title" class="search-results-header"><__trans phrase="Instructions"></h1>
+<p><__trans phrase="By default, this search engine looks for all words in any order. To search for an exact phrase, enclose the phrase in quotes:"></p>
+<blockquote>
+    <p><code>"<__trans phrase="movable type">"</code></p>
+</blockquote>
+<p><__trans phrase="The search engine also supports AND, OR, and NOT keywords to specify boolean expressions:"></p>
+<blockquote>
+    <p><code><__trans phrase="personal OR publishing"></code></p>
+    <p><code><__trans phrase="publishing NOT personal"></code></p>
+</blockquote>
+</mt:NoSearch>
+
+<mt:Ignore>Used with the ajax search capability of the new search class</mt:Ignore>
+<mt:IfMoreResults>
+<script type="text/javascript">
+<!--
+var div = document.getElementById('search-results');
+var results = {
+    '<$mt:CurrentPage$>': {
+        'content': div.innerHTML,
+        'next_url': '<$mt:NextLink$>'
+    }
+};
+var timer = window.setTimeout("getResults(" + <$mt:CurrentPage$> + ")", 1*1000);
+//-->
+</script>
+</mt:IfMoreResults>
+
+</mt:IncludeBlock>

@@ -1,0 +1,37 @@
+<mt:IncludeBlock module="Wrapper">
+    
+    <mt:setvarblock name="html_head" append="1">
+        <style type="text/css" media="screen">
+            .tagcloud {
+/*                float: right;*/
+/*                width: 30%;*/
+                list-style: none;
+            }
+            .tagcloud .tag {
+                display: inline;
+            }
+            .tag-1 { font-size: 26px;}
+            .tag-2 { font-size: 24px;}
+            .tag-3 { font-size: 22px;}
+            .tag-4 { font-size: 20px;}
+            .tag-5 { font-size: 18px;}
+            .tag-6 { font-size: 16px;}
+        </style>
+    </mt:setvarblock>
+    
+    <h3><__trans phrase="Tag Cloud"></h3>
+    <ul class="tagcloud">
+        <mt:Tags>
+            <li class="tag tag-<$mt:TagRank$>"><a href="<$mt:TagSearchLink$>"><$mt:TagName$> (<$mt:TagCount$>)</a></li>
+        </mt:Tags>
+    </ul>
+
+    <h3><__trans phrase="Search"></h3>
+    <form method="get" action="<$mt:CGIPath$><$mt:SearchScript$>">
+        <input type="text" name="search" value="<$mt:SearchString$>" />
+        <input type="hidden" name="IncludeBlogs" value="<$mt:BlogID$>" />
+        <input type="hidden" name="limit" value="<$mt:SearchMaxResults$>" />
+        <input type="submit" value="<__trans phrase="Search">" />
+    </form>
+
+</mt:IncludeBlock>
