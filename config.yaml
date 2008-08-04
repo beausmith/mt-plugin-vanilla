@@ -260,36 +260,41 @@ template_sets:
             system:
                 search_results:
                     label: Search Results
+    vanilla_assets:
+        label: Vanilla + Assets
+        base_path: templates/vanilla+assets
+        order: 509
+        notes: 
+            - Recent assets on Homepage in various sizes and formats
+            - lastn entries on Homepage with the first asset added to each as 70 pixel square
+            - Entry Detail with assets in entries
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            module:
+                wrapper:
+                    label: Wrapper
 
-# - Profiles + Userpics + Friending
-#     * Userpics
-#     * Profiles
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
-# - Profiles
-#     * Friending
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
+
 # - Rating
 #     * 1
 #     * 5 Star
 #     * -1, 0, 1
-#     vanilla:
-#         label: 'Vanilla - Homepage + Entries'
-#         base_path: 'templates/vanilla'
-#         order: 100
-#         templates:
+# - Profiles + Userpics + Friending
+#     * Userpics
+#     * Profiles
+#     * Friending
 # - Custom Fields
-# - Assets
-#   - recent assets
-#   - sizing
-
+# ----
 # - Widget & Widget Sets
 # - Logic
 #   - if/else

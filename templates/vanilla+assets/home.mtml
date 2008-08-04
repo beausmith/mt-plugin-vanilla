@@ -1,0 +1,40 @@
+<mt:IncludeBlock module="Wrapper">
+    
+    <mt:setvarblock name="html_head" append="1">
+        <style type="text/css" media="screen">            
+            .entry-thumbmail-image {
+                float: right;
+            }
+        </style>
+    </mt:setvarblock>
+
+    <mt:If tag="AssetCount">
+        <h3><__trans phrase="Recent Assets: 100 pixel height"></h3>
+        <mt:Assets type="image" lastn="10">
+        <a href="<$mt:AssetURL$>"><img src="<$mt:AssetThumbnailURL height="100"$>" alt="<$mt:AssetLabel$>" /></a>
+        </mt:Assets>
+
+        <h3><__trans phrase="Recent Assets: 50 pixel width"></h3>
+        <mt:Assets type="image" lastn="10">
+        <a href="<$mt:AssetURL$>"><img src="<$mt:AssetThumbnailURL width="50"$>" alt="<$mt:AssetLabel$>" /></a>
+        </mt:Assets>
+
+        <h3><__trans phrase="Recent Assets: 50 pixel square"></h3>
+        <mt:Assets type="image" lastn="10">
+        <a href="<$mt:AssetURL$>"><img src="<$mt:AssetThumbnailURL width="20" square="1"$>" alt="<$mt:AssetLabel$>" /></a>
+        </mt:Assets>
+    </mt:If>
+    
+
+    <h3><__trans phrase="Recent Entries (with the first asset added to each as 70 pixel square)"></h3>
+    <mt:Entries>
+        <h2><a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a></h2>
+        <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
+        <mt:EntryAssets type="image" lastn="1" sort_order="ascend">
+        <a href="<$mt:EntryPermalink$>" class="entry-thumbmail-image"><img src="<$mt:AssetThumbnailURL width="70" square="1"$>" alt="<$mt:AssetLabel$>" /></a>
+        </mt:EntryAssets>
+        <p><$mt:EntryExcerpt$></p>
+        <p><em><__trans phrase="Read  <a href="[_1]">[_2]</a>" params="<$mt:EntryPermalink$>%%<$mt:EntryTitle$>"></em></p>
+    </mt:Entries>
+
+</mt:IncludeBlock>

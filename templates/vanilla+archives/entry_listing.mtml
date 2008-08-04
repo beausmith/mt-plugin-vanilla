@@ -1,9 +1,7 @@
-<mt:IncludeBlock module="Wrapper">
+<mt:IncludeBlock module="wrapper">
 
     <h1><__trans phrase="[_1] Archives" params="<$mt:ArchiveTitle$>"></h1>
     
-    <p>archive_template: <mt:if name="archive_template">true</mt:if></p>
-
     <mt:Entries>
         <h2><a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a></h2>
         <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
@@ -16,17 +14,12 @@
     </mt:Entries>
     
     <mt:If name="category_archive">
-        <mt:setvarblock name="foobar">
-            <h3><__trans phrase="[_1] Category-Monthly Archives" params="<$mt:ArchiveTitle$>"></h3>
-            <ul>
-            <mt:if name="category_monthly_archive">
-                <li><strong><a href="<$mt:CategoryArchiveLink$>"><__trans phrase='main "[_1]" category archive' params="<$mt:CategoryLabel$>"></a></strong></li>
-            </mt:if>
-            <mt:ArchiveList archive_type="Category-Monthly">
-                <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
-            </mt:ArchiveList>
-            </ul>
-        </mt:setvarblock>
+        <h3><__trans phrase="[_1] Category-Monthly Archives" params="<$mt:ArchiveTitle$>"></h3>
+        <ul>
+        <mt:ArchiveList archive_type="Category-Monthly">
+            <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveTitle$></a></li>
+        </mt:ArchiveList>
+        </ul>
     </mt:If>
 
 </mt:IncludeBlock>

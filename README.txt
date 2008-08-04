@@ -55,6 +55,17 @@
         - Create Entry
         - Entry Response
 
+    8. Vanilla + Search & Tags
+        - Tag Cloud and Search Form on Homepage
+        - Entry Detail
+        - Page Detail
+        - Search Results Template
+
+    9. Vanilla + Assets
+        - Recent assets on Homepage in various sizes and formats
+        - lastn entries on Homepage with the first asset added to each as 70 pixel square
+        - Entry Detail with assets in entries
+    
 ## INSTALLATION ##
 
     Place the Vanilla plugin folder in the MT plugins folder
