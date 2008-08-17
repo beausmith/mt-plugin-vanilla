@@ -283,19 +283,90 @@ template_sets:
             module:
                 wrapper:
                     label: Wrapper
+    vanilla_widgets:
+        label: Vanilla + Widgets
+        base_path: templates/vanilla+widgets
+        order: 510
+        notes: 
+            Homepage with one widget set and individually included widget:
+                - Search
+                - Tag Cloud
+                - Monthly Archives
+                - Recent Entries
+                - Page Listing
+                - About Site
+            Entry Detail with a second widget set and individually included widget:
+                - Search
+                - Tag Cloud
+                - Monthly Archives
+                - About Site
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            archive:
+                entry_listing: 
+                    label: Entry Listing
+                    mappings:
+                        monthly:
+                            archive_type: Monthly
+            module:
+                wrapper:
+                    label: Wrapper
+            widget:
+                search:
+                    label: Search
+                tag_cloud_widget:
+                    label: Tag Cloud
+                monthly_archives_widget:
+                    label: Monthly Archives
+                recent_entries_widget:
+                    label: Recent Entries
+                recent_assets_widget:
+                    label: Recent Assets
+                recent_comments_widget:
+                    label: Recent Comments
+                pages_widget:
+                    label: Pages
+            widgetset:
+                blog_activity:
+                    order: 1000
+                    label: Recent Activity
+                    widgets:
+                        - Recent Entries
+                        - Recent Comments
+                        - Recent Assets
+                blog_archives:
+                    order: 1000
+                    label: Blog Archives
+                    widgets:
+                        - Search
+                        - Tag Cloud
+                        - Pages
+                        - Monthly Archives
 
 
 # - Rating
 #     * 1
 #     * 5 Star
 #     * -1, 0, 1
+#     https://intranet.sixapart.com/wiki/index.php/MovableType:Rating_Framework
+#     https://intranet.sixapart.com/wiki/index.php/Movable_Type:Athena/Rating_Framework
+#     https://intranet.sixapart.com/wiki/index.php/Movable_Type:MT4_Requirements:_Rating_framework
 # - Profiles + Userpics + Friending
 #     * Userpics
 #     * Profiles
 #     * Friending
 # - Custom Fields
 # ----
-# - Widget & Widget Sets
 # - Logic
 #   - if/else
 #   - unless
