@@ -54,15 +54,15 @@
                     <div id="comments-open-data">
                         <div>
                             <label for="comment-author"><__trans phrase="Name"></label>
-                            <input id="comment-author" name="author" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                            <input id="comment-author" name="author" size="30" value="<$mt:CommentAuthor encode_html="1"$>" onfocus="mtCommentFormOnFocus()" />
                         </div>
                         <div>
                             <label for="comment-email"><__trans phrase="Email Address"></label>
-                            <input id="comment-email" name="email" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                            <input id="comment-email" name="email" size="30" value="<$mt:CommentEmail encode_html="1"$>" onfocus="mtCommentFormOnFocus()" />
                         </div>
                         <div>
                             <label for="comment-url"><__trans phrase="URL"></label>
-                            <input id="comment-url" name="url" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                            <input id="comment-url" name="url" size="30" value="<$mt:CommentURL encode_html="1"$>" onfocus="mtCommentFormOnFocus()" />
                         </div>
                     </div>
                     <div id="comment-form-reply"<mt:IfCommentParent><mt:Else> style="display:none"</mt:IfCommentParent>>
