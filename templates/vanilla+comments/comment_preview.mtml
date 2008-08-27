@@ -6,15 +6,12 @@
                 width: 50%;
             }
         </style>
-    </mt:setvarblock>
-
-    <mt:SetVarBlock name="html_head">
-    <script type="text/javascript">
-    /* <![CDATA[ */
-    var user = <$mt:UserSessionState$>;
-    var is_preview = true;
-    /* ]]> */
-    </script>
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var user = <$mt:UserSessionState$>;
+        var is_preview = true;
+        /* ]]> */
+        </script>
     </mt:SetVarBlock>
 
     <h1><__trans phrase="Previewing your Comment"></h1>
