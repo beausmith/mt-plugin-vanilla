@@ -1,12 +1,12 @@
 <mt:IncludeBlock module="Wrapper">
 
-    <mt:SetVarBlock name="html_head">
-    <script type="text/javascript">
-    /* <![CDATA[ */
-    var user = <$mt:UserSessionState$>;
-    var is_preview = true;
-    /* ]]> */
-    </script>
+    <mt:setvarblock name="html_head" append="1">
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var user = <$mt:UserSessionState$>;
+        var is_preview = true;
+        /* ]]> */
+        </script>
     </mt:SetVarBlock>
 
     <mt:If name="comment_confirmation">
