@@ -1,0 +1,14 @@
+<mt:IncludeBlock module="Wrapper">
+
+    <mt:Entries lastn="10">
+        <h2><a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a></h2>
+        <p><__trans phrase="By [_1] on [_2]" params="<$mt:EntryAuthorLink$>%%<$mt:EntryDate format="%x %X"$>"></p>
+        <mt:If tag="EntryBody">
+            <$mt:EntryBody$>
+        </mt:If>
+        <mt:If tag="EntryMore" convert_breaks="0">
+            <em><__trans phrase="Continue reading <a href="[_1]">[_2]</a>." params="<$mt:EntryPermalink$>%%<$mt:EntryTitle$>"></em>
+        </mt:If>
+    </mt:Entries>
+
+</mt:IncludeBlock>

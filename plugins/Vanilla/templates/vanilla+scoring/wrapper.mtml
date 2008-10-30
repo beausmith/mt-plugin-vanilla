@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <title><$mt:BlogName encode_html="1"$></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=<$mt:PublishCharset$>" />
+    <$mt:Var name="html_head"$>
+    <script type="text/javascript" src="<$mt:Link template="JavaScript"$>"></script>
+    <script type="text/javascript">
+        var staticWebPath = "<$mt:StaticWebPath$>";
+        var commentScript = "<$mt:CGIPath$><$mt:CommentScript$>";
+    </script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/Score/score_base.js"></script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/Score/Dug/score.js"></script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/Score/FiveStar/score.js"></script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/Score/Favorite/score.js"></script>
+    <mt:Ignore>
+    <!-- Community Solution Scoring -->
+    <!-- This updates any scoring controls on the page for the user who is signed-in. -->
+    <script type="text/javascript">
+    /* <![CDATA[ */
+    // mtAttachEvent('load', mtUpdateScores);
+    // mtAttachEvent('usersignin', mtUpdateScores);
+    /* ]]> */
+    </script>
+    </mt:Ignore>
+
+</head>
+<body>
+    
+    <p><em>Note: this template set is funtional, but not finished.</em></p>
+
+    <h1><a href="<$mt:BlogURL$>"><$mt:BlogName encode_html="1"$></a> + <__trans phrase="Rating"></h1>
+
+<!-- end header --><hr />
+
+
+    <$mt:Var name="contents"$>
+
+
+<!-- start footer --><hr />
+
+    <p><__trans phrase="_POWERED_BY"> and the Vanilla template set</p>
+
+</body>
+</html>

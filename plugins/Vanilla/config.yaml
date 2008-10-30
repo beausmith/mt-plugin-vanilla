@@ -352,9 +352,42 @@ template_sets:
                         - Tag Cloud
                         - Pages
                         - Monthly Archives
+    vanilla_scoring:
+        label: Vanilla + Scoring
+        base_path: templates/vanilla+scoring
+        order: 511
+        notes: 
+            - Homepage & Entry archives
+            - Entry Titles and scoring only
+            - 5 star rating
+            - favorite/unfavorite
+            - digg (note: no undigg)
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+                    rebuild_me: 1
+                javascript:
+                    label: Javascript
+                    outfile: mt.js
+                    rebuild_me: 1
+                scoring:
+                    label: Scoring Javascript
+                    outfile: mtscoring.js
+                    rebuild_me: 1
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            module:
+                wrapper:
+                    label: Wrapper
 
 
-# - Rating
+# - Scoring
 #     * 1
 #     * 5 Star
 #     * -1, 0, 1

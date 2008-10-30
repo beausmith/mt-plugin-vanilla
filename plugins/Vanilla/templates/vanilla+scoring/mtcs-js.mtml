@@ -1,0 +1,121 @@
+// This file is not used by this template set.
+// It is here as a placeholder for adding a 
+// feature where scoring can be disabled once
+// a user has scored the object.
+
+
+/* MTCS Scoring *****************************************************************/
+
+<mt:Ignore>
+/***
+ * Functions for scoring entries
+ * Scoring requires blog context, it is thus conditioned.
+ */
+</mt:Ignore>
+<mt:IfBlog>
+function mtScore(entry_id) {
+    var span = DOM.getElement('scoring-id-' + entry_id);
+    if (!span) return false;
+    if (DOM.hasClassName(span, 'scoring-pending')) return false;
+    if (DOM.hasClassName(span, 'scoring-scored')) return false;
+    if (!DOM.hasClassName(span, 'scoring-scorable')) return false;
+
+    var xh = mtGetXmlHttp();
+    if (!xh) return false;
+
+    DOM.addClassName( span, 'scoring-pending' );
+    var url = '<$mt:CGIPath$><$mt:CommunityScript$>';
+    xh.open('POST', url, true);
+    xh.onreadystatechange = function() {
+        if ( xh.readyState == 4 ) {
+            if ( xh.status && ( xh.status != 200 ) ) {
+                // error - ignore
+            } else {
+                eval(xh.responseText);
+            }
+        }
+    };
+    xh.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    xh.send( '__mode=vote&blog_id=<$mt:BlogID$>&f=scored,count&jsonp=mtScore_cb&id=' + entry_id);
+    return false;
+}
+
+function mtUpdateScores() {
+    var u = mtGetUser();
+    <mt:IfAnonymousRecommendAllowed>
+    <mt:Else>
+        if (!u) return false;
+    </mt:IfAnonymousRecommendAllowed>
+
+    var entry_ids = '';
+    var scores = DOM.getElementsByClassName("scoring");
+    for (var i = 0; i < scores.length; i++) {
+        var id = scores[i].id;
+        id = id.replace(/^scoring-id-/, '');
+        if (entry_ids != '') entry_ids += ",";
+        entry_ids += id;
+    }
+    if (entry_ids == '') return false;
+
+    var xh = mtGetXmlHttp();
+    if (!xh) return false;
+
+    var url = '<$mt:CGIPath$><$mt:CommunityScript$>';
+    xh.open('POST', url, true);
+    xh.onreadystatechange = function() {
+        if ( xh.readyState == 4 ) {
+            if ( xh.status && ( xh.status != 200 ) ) {
+                // error - ignore
+            } else {
+                eval(xh.responseText);
+            }
+        }
+    };
+    xh.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    xh.send( '__mode=score&blog_id=<$mt:BlogID$>&f=scored,count&jsonp=mtScore_cb&id=' + entry_ids);
+    return false;
+}
+
+function mtScore_cb(s_hash) {
+    var u = mtGetUser();
+    if (s_hash['error']) {
+        var els = DOM.getElementsByClassName('scoring-pending');
+        for (var i = 0; i < els.length; i++)
+            DOM.removeCLassName(els[i], 'scoring-pending');
+        // display error
+        alert(s_hash['error']);
+        return;
+    }
+    for (var id in s_hash) {
+        var span = DOM.getElement('scoring-id-' + id);
+        if ( span ) {
+            DOM.removeClassName( span, 'scoring-pending' );
+            DOM.removeClassName( span, 'scoring-scorable' );
+            if ( s_hash[id].scored ) {
+                DOM.addClassName( span, 'scoring-scored' );
+            } else {
+    <mt:IfAnonymousRecommendAllowed>
+                DOM.addClassName( span, 'scoring-scorable' );
+    <mt:Else>
+                if ( u && u.is_authenticated )
+                    DOM.addClassName( span, 'scoring-scorable' );
+    </mt:IfAnonymousRecommendAllowed>
+            }
+        }
+        var score = DOM.getElement('scoring-score-' + id);
+        if ( score )
+            score.innerHTML = s_hash[id].count ? s_hash[id].count : 0;
+        var label = DOM.getElement('scoring-score-label-' + id);
+        if ( label ) {
+            switch ( s_hash[id].count ) {
+                case 1:
+                    label.innerHTML = '<__trans phrase="Vote">';
+                    break;
+                default:
+                    label.innerHTML = '<__trans phrase="Votes">';
+                    break;
+            }
+        }
+    }
+}
+</mt:IfBlog>

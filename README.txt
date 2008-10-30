@@ -60,11 +60,34 @@
         - Entry Detail
         - Page Detail
         - Search Results Template
+        - Notes:
+            - Can someone explain how mt-search determines which search template to use for rendering results?  If it’s by the value of the IncludeBlogs input, which blog id takes precedence? Does the new mt-search still support the ExcludeBlogs input?
+            - It’s IncludeBlogs.  It uses the first blog_id in the comma separated list.  And yes, ExcludeBlogs does work as it has been before.
 
     9. Vanilla + Assets
         - Recent assets on Homepage in various sizes and formats
         - lastn entries on Homepage with the first asset added to each as 70 pixel square
         - Entry Detail with assets in entries
+
+    10. Vanilla + Widgets
+        - Homepage with one widget set and individually included widget:
+            - Search
+            - Tag Cloud
+            - Monthly Archives
+            - Recent Entries
+            - Page Listing
+            - About Site
+        - Entry Detail with a second widget set and individually included widget:
+            - Search
+            - Tag Cloud
+            - Monthly Archives
+            - About Site
+    11. Vanilla + Scoring
+        
+        Tip: to remove all scoring for a particular namespace, use this SQL command:
+        
+            delete from mt_objectscore where objectscore_namespace = 'NAMESPACE';
+        
     
 ## INSTALLATION ##
 

@@ -1,0 +1,167 @@
+
+/* Ajax Requests *****************************************************************/
+
+<mt:Ignore>
+/***
+ * Returns a XMLHttpRequest object (for Ajax operations).
+ */
+</mt:Ignore>
+function mtGetXmlHttp() {
+    if ( !window.XMLHttpRequest ) {
+        window.XMLHttpRequest = function() {
+            var types = [
+                "Microsoft.XMLHTTP",
+                "MSXML2.XMLHTTP.5.0",
+                "MSXML2.XMLHTTP.4.0",
+                "MSXML2.XMLHTTP.3.0",
+                "MSXML2.XMLHTTP"
+            ];
+
+            for ( var i = 0; i < types.length; i++ ) {
+                try {
+                    return new ActiveXObject( types[ i ] );
+                } catch( e ) {}
+            }
+
+            return undefined;
+        };
+    }
+    if ( window.XMLHttpRequest )
+        return new XMLHttpRequest();
+}
+
+
+/* Adding Handlers to window events *****************************************************************/
+
+<mt:Ignore>
+/***
+ * A utility function for assigning/adding handlers to window events.
+ */
+</mt:Ignore>
+function mtAttachEvent(eventName,func) {
+    var onEventName = 'on' + eventName;
+    var old = window[onEventName];
+    if( typeof old != 'function' )
+        window[onEventName] = func;
+    else {
+        window[onEventName] = function( evt ) {
+            old( evt );
+            return func( evt );
+        };
+    }
+}
+
+/* DOM Handler *****************************************************************/
+
+if ( !window.DOM )
+    DOM = {
+
+        getElement: function( e ) {
+            return (typeof e == "string" || typeof e == "number") ? document.getElementById( e ) : e;
+        },
+    
+    
+        addEventListener: function( e, en, f, uc ) {
+            try {
+                if( e.addEventListener )
+                    e.addEventListener( en, f, uc );
+                else if( e.attachEvent )
+                    e.attachEvent( "on" + en, f );
+                else
+                    e[ "on" + en ] = f;
+            } catch( e ) {}
+        },
+
+    
+        getClassNames: function( e ) {
+            if( !e || !e.className )
+                return [];
+            return e.className.split( /\s+/g );
+        },
+    
+    
+        hasClassName: function( e, cn ) {
+            e = DOM.getElement( e );
+            if( !e || !e.className )
+                return false;
+            var cs = DOM.getClassNames( e );
+            for( var i = 0; i < cs.length; i++ ) {
+                if( cs[ i ] == cn )
+                    return true;
+            }
+            return false;
+        },
+    
+    
+        addClassName: function( e, cn ) {
+            e = DOM.getElement( e );
+            if( !e || !cn )
+                return false;
+            var cs = DOM.getClassNames( e );
+            for( var i = 0; i < cs.length; i++ ) {
+                if( cs[ i ] == cn )
+                    return true;
+            }
+            cs.push( cn );
+            e.className = cs.join( " " );
+            return false;
+        },
+    
+    
+        removeClassName: function( e, cn ) {
+            var r = false;
+            e = DOM.getElement( e );
+            if( !e || !e.className || !cn )
+                return r;
+            var cs = (e.className && e.className.length)
+                ? e.className.split( /\s+/g )
+                : [];
+            var ncs = [];
+            /* support regex */
+            if( cn instanceof RegExp ) {
+                for( var i = 0; i < cs.length; i++ ) {
+                    if ( cn.test( cs[ i ] ) ) {
+                        r = true;
+                        continue;
+                    }
+                    ncs.push( cs[ i ] );
+                }
+            } else {
+                for( var i = 0; i < cs.length; i++ ) {
+                    if( cs[ i ] == cn ) {
+                        r = true;
+                        continue;
+                    }
+                    ncs.push( cs[ i ] );
+                }
+            }
+            if( r )
+                e.className = ncs.join( " " );
+            return r;
+        },
+
+
+        getElementsByTagAndClassName: function( tagName, className, root ) {
+            root = DOM.getElement( root );
+            if( !root )
+                root = document;
+            var allElements = root.getElementsByTagName( tagName );
+            var elements = [];
+            for( var i = 0; i < allElements.length; i++ ) {
+                var element = allElements[ i ];
+                if( !element )
+                    continue;
+                if( DOM.hasClassName( element, className ) )
+                    elements[ elements.length ] = element;
+            }
+            return elements;
+        },
+
+
+        getElementsByClassName: function( className, root ) {
+            return DOM.getElementsByTagAndClassName( "*", className, root );
+        }
+
+
+    };
+
