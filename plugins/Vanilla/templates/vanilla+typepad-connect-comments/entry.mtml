@@ -1,0 +1,28 @@
+<!--
+    == STEP 5 ==
+    Include TypePad Connect Configuration Module on entry detail.
+-->
+<$mt:Include module="TypePad Connect Configuration"$>
+
+<mt:IncludeBlock module="Wrapper">
+
+    <h1><$mt:EntryTitle$></h1>
+
+<!--
+    == STEP 6 ==
+    Include TypePad Connect Comments Module, if you don't need MT comments.
+-->
+
+    <!-- Use this for TypePad Connect Comments -->
+    <$mt:Include module="TypePad Connect Comments"$>
+
+<!--
+    == STEP 7 (optional) ==
+    Include TypePad Connect Comments Module, if you don't need your older comments.
+-->
+<mt:Ignore>
+    <!-- Use this for combined TP and MT comments -->
+    <$mt:Include module="TypePad and Movable Type Comments"$>
+</mt:Ignore>
+
+</mt:IncludeBlock>

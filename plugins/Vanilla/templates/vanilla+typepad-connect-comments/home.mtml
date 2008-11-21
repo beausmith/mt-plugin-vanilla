@@ -1,0 +1,20 @@
+<!--
+    == STEP 4 ==
+    Include TypePad Connect Configuration Module on entry listing pages.
+-->
+<$mt:Include module="TypePad Connect Configuration"$>
+
+<mt:IncludeBlock module="Wrapper">
+
+    <mt:Entries>
+        <h2><a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a></h2>
+        <p><a href="<$mt:EntryPermalink$>#comments">Leave a comment</a></p>
+        <mt:Ignore>
+        <!--
+            The text in the link "Leave a comment" will be replaced by
+            "Comments (2)" if two comments have been left via TypePad Connect.
+        -->
+        </mt:Ignore>
+    </mt:Entries>
+
+</mt:IncludeBlock>

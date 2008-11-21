@@ -87,8 +87,13 @@
         Tip: to remove all scoring for a particular namespace, use this SQL command:
         
             delete from mt_objectscore where objectscore_namespace = 'NAMESPACE';
-        
-    
+
+    12. Vanilla + TypePad Connect Commenting
+        - Sample implementation of TypePad Connect Commenting.
+        - Abstracting Configuration into Module
+        - Option for integrating MT and TP comments
+
+
 ## INSTALLATION ##
 
     Place the Vanilla plugin folder in the MT plugins folder

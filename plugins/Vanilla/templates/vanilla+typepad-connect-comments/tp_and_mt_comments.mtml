@@ -1,0 +1,36 @@
+<!-- Create a variable with the entry date as the value. -->
+<mt:SetVarBlock name="entry_date"><$mt:EntryCreatedDate format="%Y%m%d"$></mt:SetVarBlock>
+
+<mt:If name="entry_date" gt="$switch_date">
+    <!--
+        If entry_date is greater than the date TypePad Connect Commenting was 
+        implemented, then use TypePad Commenting Code... 
+    -->
+
+    <$mt:Include module="TypePad Connect Comments"$>
+
+<mt:Else>
+    <!--
+        Otherwise use Movable Type Commenting Code
+    -->
+
+    <!-- Replace this html comment with your exisiting MT comments code. -->
+
+</mt:If>
+
+
+
+
+<mt:Ignore>
+<!--
+    If you want to publish all comments left in MT to date, but then use
+    TypePad Connect Commenting for all new comments, use the below Unless
+    conditional code instead of the If tag conditional above:
+-->
+
+    <mt:Unless name="entry_date" gt="$switch_date">
+        <!-- Replace this html comment with the comments code, but not the commenting form. -->
+    </mt:Unless>
+    <$mt:Include module="TypePad Connect Comments"$>
+
+</mt:Ignore>

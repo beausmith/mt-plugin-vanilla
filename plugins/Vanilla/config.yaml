@@ -385,6 +385,34 @@ template_sets:
             module:
                 wrapper:
                     label: Wrapper
+    vanilla_typepad_connect:
+        label: Vanilla + TypePad Connect
+        base_path: templates/vanilla+typepad-connect-comments
+        order: 512
+        notes: 
+            - Sample implementation of TypePad Connect Commenting.
+            - Abstracting Configuration into Module
+            - Option for integrating MT and TP comments
+        templates:
+            index:
+                home:
+                    label: Homepage
+                    outfile: index.html
+            individual:
+                entry: 
+                    label: Entry
+                    mappings:
+                        entry_archive:
+                            archive_type: Individual
+            module:
+                wrapper:
+                    label: Wrapper
+                typepad_config:
+                    label: TypePad Connect Configuration
+                typepad_comments:
+                    label: TypePad Connect Comments
+                tp_and_mt_comments:
+                    label: TypePad and Movable Type Comments
 
 
 # - Scoring
