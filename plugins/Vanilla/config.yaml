@@ -398,6 +398,9 @@ template_sets:
                 home:
                     label: Homepage
                     outfile: index.html
+                profile:
+                    label: Profile
+                    outfile: profile.html
             individual:
                 entry: 
                     label: Entry

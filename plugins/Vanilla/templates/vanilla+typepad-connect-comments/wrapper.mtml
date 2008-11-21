@@ -8,6 +8,10 @@
 <body>
 
     <h1><a href="<$mt:BlogURL$>"><$mt:BlogName encode_html="1"$></a> + <__trans phrase="TypePad Connect Comments"></h1>
+    
+    <ul>
+        <li><a href="<mt:Link template="profile">">view profile<a></li>
+    </ul>
 
 <!-- end header --><hr />
 
@@ -27,7 +31,7 @@
     listing of entries with comment counts. If you have a common footer module
     (or other footer include file), place this script in that module.
 -->
-<script type="text/javascript" src="http://profile.typepad.com/services/embed/tpc/<$mt:Var name="blog_code"$>/counts_embed.js"></script>
+<script type="text/javascript" src="http://profile.typepad.com/services/embed/tpc/<$mt:Var name="typepad_blog_id"$>/counts_embed.js"></script>
 
 </body>
 </html>
