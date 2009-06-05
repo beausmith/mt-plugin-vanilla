@@ -155,7 +155,7 @@ template_sets:
                     label: Comment Response
     vanilla_comments_userpics:
         label: Vanilla + Comments w/ Userpics
-        base_path: templates/vanilla+authentication+comments+userpics
+        base_path: templates/vanilla+comments+userpics
         notes:
             - Authentication w/ userpic
             - Comments w/ userpics
