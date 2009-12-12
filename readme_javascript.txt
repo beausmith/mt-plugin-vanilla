@@ -1,3 +1,5 @@
+This file has descriptions of the MT javascript functions... sitting here in the hopes that it'll be part of a future Vanilla template set.
+
 <$mt:var name="user-auth" value="signin-content"$>
 <mt:Ignore>
     Set show_userpic to 1 to enable userpics in the signin line

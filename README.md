@@ -1,18 +1,15 @@
-## Vanila, a plugin for Movable Type
-## Author: Beau Smith at Six Apart
-## Version: 0.1
-## Released under GPL
+# Vanilla
 
 ## Overview
 
 Vanilla provides various template sets which contain the minimal amount of code necessary to show a specific feature in Movable Type. These template sets are not indended to be used for publishing your blog, rather they to be used for learning how to add a particular feature.
 
-### Prerequisites
+## Prerequisites
 
 * **Movable Type 4.2** for most features
 * **Score Plugin** for Vanilla + Scoring template set
 
-### Usage
+## Usage
 
 1. Create a new test blog using the template set with the desired feature. Perhaps call it "Vanilla"
 2. Add content to Vanilla blog based upon requirements of feature
@@ -22,11 +19,11 @@ Vanilla provides various template sets which contain the minimal amount of code 
 3. Republish the Vanilla blog
 4. Copy necessary template code for desired features into your production blog
 
-### Tips
+## Tips
 
 * When pasting templates with \_trans tags, MT will convert all translation strings upon save. So you can also [browse the templates via SVN](http://code.sixapart.com/svn/mtplugins/trunk/Vanilla/templates/) and then copy/paste them into MT template editing screen. _Of course this tip applies to all template sets_
 
-### Templates Sets
+## Templates Sets
 
 1. **Vanilla**
     * Lastn entries on Homepage
@@ -97,12 +94,7 @@ Vanilla provides various template sets which contain the minimal amount of code 
     * Option for integrating MT and TP comments
 
 
-### Download
-
-* [Vanila beta 2](Vanilla_b2.zip) - 2008 Nov 21
-* [Vanila beta 1](Vanilla_b1.zip) - 2008 Sep 4
-
-### Installation
+## Installation
 
     $MT_DIR/
         plugins/
@@ -120,12 +112,7 @@ There is no official support for this plugin, but you may email beau at sixapart
 
 Please email beau at sixapart com.
 
-### Code
-
-* **Subversion** [http://code.sixapart.com/svn/mtplugins/trunk/Vanilla/](http://code.sixapart.com/svn/mtplugins/trunk/Vanilla/)
-* **TRAC** [Code Browser](http://code.sixapart.com/trac/mtplugins/browser/trunk/Vanilla) [Revision Log](http://code.sixapart.com/trac/mtplugins/log/trunk/Vanilla)
-
-### Revision History
+## Revision History
 
 <dl>
     <dt>b3 - 2009 Jun 05</dt>
