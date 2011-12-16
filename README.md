@@ -21,7 +21,7 @@ Vanilla provides various template sets which contain the minimal amount of code 
 
 ## Tips
 
-* When pasting templates with \_trans tags, MT will convert all translation strings upon save. So you can also [browse the templates via SVN](http://code.sixapart.com/svn/mtplugins/trunk/Vanilla/templates/) and then copy/paste them into MT template editing screen. _Of course this tip applies to all template sets_
+* When pasting templates with \_trans tags, MT will convert all translation strings upon save. So you can also [browse the templates](https://github.com/beausmith/mt-plugin-vanilla/tree/master/plugins/Vanilla/templates) and then copy/paste them into MT template editing screen. _Of course this tip applies to all template sets_
 
 ## Templates Sets
 
